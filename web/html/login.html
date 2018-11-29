@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>login</title>
+    <link href="../src/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!-- -->
+    <!--
+    <script>
+        var __links = document.querySelectorAll('a');
+
+        function __linkClick(e) {
+            parent.window.postMessage(this.href, '*');
+        };
+        for (var i = 0, l = __links.length; i < l; i++) {
+            if (__links[i].getAttribute('data-t') == '_blank') {
+                __links[i].addEventListener('click', __linkClick, false);
+            }
+        }
+    </script>
+    -->
+    <script src="../src/js/jquery.min.js"></script>
+    <!--
+    <script>
+        $(document).ready(function (c) {
+            $('.alert-close').on('click', function (c) {
+                $('.message').fadeOut('slow', function (c) {
+                    $('.message').remove();
+                });
+            });
+        });
+    </script>
+    -->
+</head>
+<body>
+<!-- contact-form -->
+<div class="message warning">
+    <div class="inset">
+        <div class="login-head">
+            <h1>Login Form</h1>
+            <!-- <div class="alert-close"></div> -->
+        </div>
+        <form onsubmit="return false">
+            <li>
+                <input id="username" type="text" class="text" value="Username" onfocus="this.value = '';"
+                       onblur="if (this.value == '') {this.value = 'Username';}"><a href="#" class=" icon user"></a>
+            </li>
+            <div class="clear"></div>
+            <li>
+                <input id="password" type="password" value="Password" onfocus="this.value = '';"
+                       onblur="if (this.value == '') {this.value = 'Password';}"> <a href="#" class="icon lock"></a>
+            </li>
+            <div class="clear"></div>
+            <div class="submit">
+                <input type="submit" onclick="myFunction()" value="Sign in">
+                <h4><a href="#">Lost your Password ?</a></h4>
+                <div class="clear"></div>
+            </div>
+
+        </form>
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+<!--- footer --->
+<div class="footer">
+    <p>Copyright &copy; 2019.</p>
+</div>
+
+<script>
+    function myFunction() {
+        var data = {
+            username: $("#username").val(),
+            password: $("#password").val()
+        }
+        $.ajax({
+            type: "post",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            url: "/login",
+            success: function (data, status, xhr) {
+                if (xhr.status == 200) {
+                    location.href = "/index"
+                } else {
+                    alert(data.msg)
+                }
+            }
+        })
+    }
+</script>
+
+</body>
+</html>
