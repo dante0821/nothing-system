@@ -38,20 +38,29 @@ func route(e *echo.Echo) {
 }
 
 func Login(c echo.Context) error {
-	c.Request().ParseForm()
-	if c.FormValue("username") != "szc" {
+	loginInfo := &LoginInfo{}
+	if err:= c.Bind(loginInfo); err != nil {
+		return c.JSON(http.StatusBadRequest, &Rsp{"请求体错误"})
+	}
+
+	if loginInfo.Username != "szc" {
 		return c.JSON(http.StatusBadRequest, &Rsp{"账号错误"})
 	}
-	if c.FormValue("password") != "szc" {
+	if loginInfo.Username != "szc" {
 		return c.JSON(http.StatusBadRequest, &Rsp{"密码错误"})
 	}
 	return c.JSON(http.StatusOK, nil)
 }
 
-func GetCurrentUserInfo(c echo.Context) error {
-	return c.JSON(http.StatusOK, nil)
+type Rsp struct {
+	Msg string `json:"msg"`
 }
 
-type Rsp struct {
-	Msg  string `json:"msg"`
+type LoginInfo struct {
+	Username string
+	Password string
+}
+
+func GetCurrentUserInfo(c echo.Context) error {
+	return c.JSON(http.StatusOK, nil)
 }
