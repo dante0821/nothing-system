@@ -5,7 +5,7 @@ import (
 	"github.com/labstack/echo/middleware"
 	"time"
 	"net/http"
-	"awesomeProject/MySystem/middlewares"
+	"MySystem/middlewares"
 )
 
 func main() {
