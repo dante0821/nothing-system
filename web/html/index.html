@@ -57,15 +57,13 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">所有商品</a>
                     <dl class="layui-nav-child">
-                        <dd><a class="detail" href="javascript:;" data-url="html/welcome" data-id="welcome"
+                        <dd><a class="detail" data-url="html/welcome" data-id="welcome"
                                data-title="首页">列表一</a>
                         </dd>
-                        <dd><a class="detail" href="javascript:;" data-url="html/welcome" data-id="welcome1"
-                               data-title="首页1">列表一</a>
+                        <dd><a class="detail" data-url="html/user_info_list"
+                               data-id="user_info_list"
+                               data-title="用户信息">用户信息</a>
                         </dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="javascript:;">列表三</a></dd>
-                        <dd><a href="">超链接</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -104,10 +102,9 @@
 </div>
 <script>
     //JavaScript代码区域
-    layui.use('element', function () {
+    layui.use(['element'], function () {
         var $ = layui.jquery;
         var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
-
         //触发事件
         var active = {
             //在这里给active绑定几项事件，后面可通过active调用这些事件

@@ -30,7 +30,9 @@ func route(e *echo.Echo) {
 	e.POST("login", Login)
 	e.GET("user_info", GetCurrentUserInfo, middlewares.KeyAuth())
 	e.File("/", "web/html/login.html")
+	e.File("/login", "web/html/login.html")
 	e.File("/index", "web/html/index.html")
+	e.File("/canvas", "web/html/canvas.html")
 	e.Static("/src", "web/src")
 	e.Static("/lay", "web/src/lay")
 	e.Static("/css", "web/src/css")
@@ -46,7 +48,7 @@ func Login(c echo.Context) error {
 	if loginInfo.Username != "szc" {
 		return c.JSON(http.StatusBadRequest, &Rsp{"账号错误"})
 	}
-	if loginInfo.Username != "szc" {
+	if loginInfo.Password != "szc" {
 		return c.JSON(http.StatusBadRequest, &Rsp{"密码错误"})
 	}
 	return c.JSON(http.StatusOK, nil)
