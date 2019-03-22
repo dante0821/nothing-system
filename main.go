@@ -1,14 +1,29 @@
 package main
 
 import (
+	"MySystem/boostrap"
+	"MySystem/config"
+	"MySystem/globals"
+	"MySystem/handle"
+	"MySystem/middlewares"
+	"flag"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"time"
 	"net/http"
-	"MySystem/middlewares"
+	"time"
 )
 
+var (
+	cfg = flag.String("c", "cfg.yml", "The path of configuration file")
+)
+
+func init() {
+	flag.Parse()
+	bootstrap.Bootstrap(*cfg)
+}
+
 func main() {
+	defer bootstrap.Destory()
 	e := echo.New()
 	e.Use(middleware.CORSWithConfig(
 		middleware.CORSConfig{
@@ -18,8 +33,10 @@ func main() {
 			MaxAge:           int(time.Hour) * 12,
 		},
 	))
+
+	e.Validator = globals.NewDefaultValidator()
 	route(e)
-	e.Start(":8111")
+	e.Start(config.Config().HTTPBind)
 }
 
 func route(e *echo.Echo) {
@@ -28,7 +45,12 @@ func route(e *echo.Echo) {
 	}))
 	//group := e.Group("/")
 	e.POST("login", Login)
-	e.GET("user_info", GetCurrentUserInfo, middlewares.KeyAuth())
+	e.GET("person_info/:id", handle.GetPerson, middlewares.KeyAuth())
+	e.POST("add_person_info", handle.CreatePerson, middlewares.KeyAuth())
+	e.DELETE("person_info/:id", handle.DeletePerson, middlewares.KeyAuth())
+	e.PATCH("person_info/:id", handle.UpdatePerson, middlewares.KeyAuth())
+	e.GET("person_info_list", handle.GetPersonList, middlewares.KeyAuth())
+
 	e.File("/", "web/html/login.html")
 	e.File("/login", "web/html/login.html")
 	e.File("/index", "web/html/index.html")
@@ -41,7 +63,7 @@ func route(e *echo.Echo) {
 
 func Login(c echo.Context) error {
 	loginInfo := &LoginInfo{}
-	if err:= c.Bind(loginInfo); err != nil {
+	if err := c.Bind(loginInfo); err != nil {
 		return c.JSON(http.StatusBadRequest, &Rsp{"请求体错误"})
 	}
 
@@ -61,8 +83,4 @@ type Rsp struct {
 type LoginInfo struct {
 	Username string
 	Password string
-}
-
-func GetCurrentUserInfo(c echo.Context) error {
-	return c.JSON(http.StatusOK, nil)
 }

@@ -223,18 +223,6 @@
                     }
                 }
             });
-
-
-            $.ajax({
-                type: "get",
-                url: "/user_info",
-                beforeSend: function (XMLHttpRequest) {
-                    XMLHttpRequest.setRequestHeader("session", "1");
-                },
-                success: function (data, status, xhr) {
-
-                }
-            })
         }
 
         init();

@@ -1,7 +1,7 @@
-HTTPBind: :8080
+HTTPBind: :8111
 Mysql:
-  DbDsn: dev:h~,o(l=4#aiVOgBB@tcp(192.168.2.212:3306)/odin?charset=utf8
+  DbDsn: root:szc910821@tcp(127.0.0.1:3306)/mybase?charset=utf8
   ShowSql: true
 Redis:
-  RedisAddr: 192.168.2.212:6379
+  RedisAddr: 127.0.0.1:6379
   RedisDb: 12
